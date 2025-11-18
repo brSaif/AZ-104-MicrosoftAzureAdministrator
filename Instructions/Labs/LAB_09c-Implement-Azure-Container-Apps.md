@@ -18,10 +18,6 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 Your organization has a web application that runs on a virtual machine in your on-premises data center. The organization wants to move all applications to the cloud but doesn't want to have a large number of servers to manage. You decide to evaluate Azure Container Apps.
 
-## Interactive lab simulations
-
-There are no interactive lab simulations for this topic. 
-
 ## Architecture diagram
 
 ![Diagram of the tasks.](../media/az104-lab09b-aca-architecture.png)
@@ -37,19 +33,21 @@ Azure Container Apps take the concept of a managed Kubernetes cluster a step fur
 
 1. From the Azure portal, search for and select `Container Apps`.
 
-1. From **Container Apps**, select **Create**.
+1. Select **+ Create**, from drop-down menu, **Container App**. Notice the other choices. 
 
-1. Use the following information to fill out the details on the **Basics** tab.*.
+1. Use the following information to fill out the details on the **Basics** tab.
 
     | Setting | Action |
     |---|---|
     | Subscription | Select your Azure subscription |
     | Resource group | `az104-rg9` |
     | Container app name |  `my-app` |
-    | Region    | **East US** (Or a region available near you) |
-    | Container Apps Environment | Leave default |
+    | Region    | **East US** |
+    | Container Apps Environment | Select **Create new** > Set Environment name to `my-environment` > **Create** |
 
-1. On the **Container** tab, ensure that **Use quickstart image** is enabled and that the quickstart image is set to **Simple hello world container**.
+1. Click **Next: Container** tab and ensure that **Use quickstart image** is checked. You may need to scroll up to view this setting. 
+
+1. Ensure **Quickstart image** is set to **Simple hello world container**. Notice the other choices. 
 
 1. Select the **Review and create** and then **Create**.
 
@@ -75,6 +73,15 @@ If you are working with **your own subscription** take a minute to delete the la
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
 + Using the CLI, `az group delete --name resourceGroupName`.
 
+## Extend your learning with Copilot
+Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.
+
++ Summarize the steps to create and configure an Azure Container App.
++ Compare and contrast Azure Container Apps to Azure Kubernetes Service.
+
+## Learn more with self-paced training
+
++ [Configure a container app in Azure Container Apps](https://learn.microsoft.com/training/modules/configure-container-app-azure-container-apps/). Examines the features and capabilities of Azure Container Apps, and then focuses on how to create, configure, scale, and manage container apps using Azure Container Apps.
 
 
 ## Key takeaways
@@ -85,7 +92,4 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + Container Apps provides server configuration, container orchestration, and deployment details. 
 + Workloads on ACA are usually long-running processes like a Web App.
 
-## Learn more with self-paced training
-
-+ [Configure a container app in Azure Container Apps](https://learn.microsoft.com/training/modules/configure-container-app-azure-container-apps/). Examines the features and capabilities of Azure Container Apps, and then focuses on how to create, configure, scale, and manage container apps using Azure Container Apps.
      

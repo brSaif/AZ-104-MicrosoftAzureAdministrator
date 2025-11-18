@@ -18,12 +18,6 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 Your organization has migrated their infrastructure to Azure. It is important that Administrators are notified of any significant infrastructure changes. You plan to examine the capabilities of Azure Monitor, including Log Analytics.
 
-## Interactive lab simulation
-
-There is an interactive lab simulation that you might find useful for this topic. The simulation lets you to click through a similar scenario at your own pace. There are differences between the interactive simulation and this lab, but many of the core concepts are the same. An Azure subscription is not required.
-
-+ [Implement monitoring](https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%2017). Create a Log Analytics workspace and Azure-automation solutions. Review monitoring and diagnostic settings for virtual machines. Review Azure Monitor and Log Analytics functionality. 
-
 ## Architecture diagram
 
 ![Diagram of the architecture tasks](../media/az104-lab11-architecture.png)
@@ -41,17 +35,17 @@ There is an interactive lab simulation that you might find useful for this topic
 
 In this task, you will deploy a virtual machine that will be used to test monitoring scenarios.
 
-1. Download the **\\Allfiles\\Lab11\\az104-11-vm-template.json** lab files to your computer.
+1. Download the **\\Allfiles\\Labs\\11\\az104-11-vm-template.json** lab files to your computer.
 
 1. Sign in to the **Azure portal** - `https://portal.azure.com`.
 
 1. From the Azure portal, search for and select `Deploy a custom template`.
 
-1. On the custom deployment page, select **Build you own template in the editor**.
+1. On the custom deployment page, select **Build your own template in the editor**.
 
 1. On the edit template page, select **Load file**.
 
-1. Locate and select the **\\Allfiles\\Labs11\\az104-11-vm-template.json** file and select **Open**.
+1. Locate and select the **\\Allfiles\\Labs\\11\\az104-11-vm-template.json** file and select **Open**.
 
 1. Select **Save**.
 
@@ -65,7 +59,7 @@ In this task, you will deploy a virtual machine that will be used to test monito
     | Username      | `localadmin`   |
     | Password      | Provide a complex password |
     
-1. Select **Review + Create**, then select **Create**.
+1. Select **Review + create**, then select **Create**.
 
 1. Wait for the deployment to finish, then click **Go to resource group**.
 
@@ -79,9 +73,9 @@ In this task, you will deploy a virtual machine that will be used to test monito
 
 1. Select **View** in the **VM Insights** box, and then select **Configure Insights**.
 
-1. Select your virtual machine, and then **Enable** (twice).
+1. Select **Enable** next to your virtual machine.
 
-1. Take the defaults for subscription and data collection rules, then select **Configure**. 
+1. Take the defaults, select **Review + enable**, and then **Enable**.  
 
 1. It will take a few minutes for the virtual machine agent to install and configure, proceed to the next step. 
    
@@ -93,7 +87,7 @@ In this task, you create an alert for when a virtual machine is deleted.
 
 1. Select **Create +** and select **Alert rule**. 
 
-1. Select the box for the resource group, then select **Apply**. This alert will apply to any virtual machines in the resource group. Alternatively, you could just specify one particular machine. 
+1. Select the box for the subscription, then select **Apply**. This alert will apply to any virtual machines in the subscription. Alternatively, you could just specify one particular machine. 
 
 1. Select the **Condition** tab and then select the **See all signals** link.
 
@@ -109,7 +103,7 @@ In this task, you create an alert for when a virtual machine is deleted.
 
 In this task, if the alert is triggered send an email notification to the operations team. 
 
-1. Continue working on your alert. Select **Next: Actions**, and then select **Create action group**.
+1. Continue working on your alert. Move to the **Actions** tab, select **Use action groups** then select **Create action group** in the **Select action group** blade.
 
     >**Did you know?** You can add up to five action groups to an alert rule. Action groups are executed concurrently, in no specific order. Multiple alert rules can use the same action group. 
 
@@ -136,7 +130,9 @@ In this task, if the alert is triggered send an email notification to the operat
 
     >**Note:** You should receive an email notification saying you were added to an action group. There may be a few minutes delay, but that is a sure sign the rule has deployed.
 
-1. Once the action group is created move to the **Next: Details** tab and enter the following values for each setting.
+1. Select **Review + create** and then **Create**.
+   
+1. Once the action group is created move to the **Next: Details >** tab and enter the following values for each setting.
 
     | Setting | Value |
     |---------|---------|
@@ -157,7 +153,7 @@ In this task, you trigger the alert and confirm a notification is sent.
 
 1. Select **Delete** from the menu bar.
 
-1. Check the box for **Apply force delete**. Enter `delete` to confirm and then select **Delete**. 
+1. Check the box for **Apply force delete**. Check the box at the bottom confirming that you want the resources to be deleted and select **Delete**. 
 
 1. In the title bar, select the **Notifications** icon and wait until **vm0** is successfully deleted.
 
@@ -179,11 +175,11 @@ In this task, you create an alert rule to suppress notifications during a mainte
 
 1. Continue in the **Alerts** blade, select **Alert processing rules** and then **+ Create**. 
    
-1. Select your **resource group**, then select **Apply**.
+1. Select your **Subscription**, then select **Apply**.
    
 1. Select **Next: Rule settings**, then select **Suppress notifications**.
    
-1. Select **Next: Scheduling**.
+1. Select **Next: Scheduling >**.
    
 1. By default, the rule works all the time, unless you disable it or configure a schedule. You are going to define a rule to suppress notifications during overnight maintenance.
 Enter these settings for the scheduling of the alert processing rule:
@@ -197,7 +193,7 @@ Enter these settings for the scheduling of the alert processing rule:
 
     ![Screenshot of the scheduling section of an alert processing rule](../media/az104-lab11-alert-processing-rule-schedule.png)
 
-1. Select **Next: Details** and enter these settings:
+1. Select **Next: Details >** and enter these settings:
 
     | Setting | Value |
     |---------|---------|
@@ -211,19 +207,23 @@ Enter these settings for the scheduling of the alert processing rule:
 
 In this task, you will use Azure Monitor to query the data captured from the virtual machine.
 
-1. In the Azure portal, search for and select `Monitor` blade, click **Logs**.
+    >**Note:** It can take 15-30 minutes for data to appear. Concentrate on the method and types of queries, rather than the results. 
 
-1. If necessary close the splash screen. 
+1. In the Azure portal, search for and select `Monitor`, then click **Logs**.
 
-1. Select a scope, your **resource group**. Select **Apply**. 
+1. If necessary, close the splash screen. 
 
-1. In the **Queries** tab, select **Virtual machines** (left pane). 
+1. If necessary, select a scope, your **Subscription**. Select **Apply**. 
+
+1. In the **Queries** tab, select **Virtual machines** (left pane). You may need to reopen the blade.
+
+    ![Screenshot of the queries tab.](../media/az104-lab11-queries.png)
 
 1. Review the queries that are available. **Run** (hover over the query) the **Count heartbeats** query.
 
 1. You should receive a heartbeat count for when the virtual machine was running.
 
-1. Review the query. This query uses the *heartbeat* table. 
+1. On the right side of the screen select the drop down next to **Simple mode**, choose **KQL mode**. Review the query. This query uses the *heartbeat* table.
 
 1. Replace the query with this one, and then click **Run**. Review the resulting chart. 
 
@@ -234,6 +234,8 @@ In this task, you will use Azure Monitor to query the data captured from the vir
     | summarize avg(Val) by bin(TimeGenerated, 5m), Computer //split up by computer
     | render timechart
    ```
+
+    >**Note:** If the query does not paste correctly, try pasting into Notepad and then copying and re-pasting into the query field.
 
 1. As you have time, review and run other queries. 
 
@@ -249,6 +251,18 @@ If you are working with **your own subscription** take a minute to delete the la
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
 + Using the CLI, `az group delete --name resourceGroupName`.
 
+## Extend your learning with Copilot
+Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.
+
++ What are the basic configuration steps to be alerted in Azure when a virtual machine is down?
++ How can I be notified when an Azure alert is triggered?
++ Construct an Azure Monitor query to provide virtual machine CPU performance information.
+
+## Learn more with self-paced training
+
++ [Improve incident response with alerting on Azure](https://learn.microsoft.com/en-us/training/modules/incident-response-with-alerting-on-azure/). Respond to incidents and activities in your infrastructure through alerting capabilities in Azure Monitor.
++ [Monitor your Azure virtual machines with Azure Monitor](https://learn.microsoft.com/en-us/training/modules/monitor-azure-vm-using-diagnostic-data/). Monitor your Azure VMs by using Azure Monitor to collect and analyze VM host and client metrics and logs.
+
 ## Key takeaways
 
 Congratulations on completing the lab. Here are the main takeaways for this lab. 
@@ -258,8 +272,3 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + An alert rule monitors your data and captures a signal that indicates something is happening on the specified resource.
 + An alert is triggered if the conditions of the alert rule are met. Several actions (email, SMS, push, voice) can be triggered.
 + Action groups include individuals that should be notified of an alert.
-
-## Learn more with self-paced training
-
-+ [Improve incident response with alerting on Azure](https://learn.microsoft.com/en-us/training/modules/incident-response-with-alerting-on-azure/). Respond to incidents and activities in your infrastructure through alerting capabilities in Azure Monitor.
-+ [Monitor your Azure virtual machines with Azure Monitor](https://learn.microsoft.com/en-us/training/modules/monitor-azure-vm-using-diagnostic-data/). Monitor your Azure VMs by using Azure Monitor to collect and analyze VM host and client metrics and logs.

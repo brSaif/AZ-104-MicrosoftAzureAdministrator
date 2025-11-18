@@ -18,16 +18,6 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 Your organization segments core IT apps and services (such as DNS and security services) from other parts of the business, including your manufacturing department. However, in some scenarios, apps and services in the core area need to communicate with apps and services in the manufacturing area. In this lab, you configure connectivity between the segmented areas. This is a common scenario for separating production from development or separating one subsidiary from another.  
 
-## Interactive lab simulations
-
-There are several interactive lab simulations that you might find useful for this topic. The simulation lets you to click through a similar scenario at your own pace. There are differences between the interactive simulation and this lab, but many of the core concepts are the same. An Azure subscription is not required. 
-
-+ [Connect two Azure virtual networks using global virtual network peering](https://mslabs.cloudguides.com/guides/AZ-700%20Lab%20Simulation%20-%20Connect%20two%20Azure%20virtual%20networks%20using%20global%20virtual%20network%20peering). Test the connection between two virtual machines in different virtual networks. Create a virtual network peering and retest.
-
-+ [Configure monitoring for virtual networks](https://learn.microsoft.com/training/modules/configure-monitoring-virtual-networks/). Understand how to use Azure Network Watcher Connection Monitor, flow logs, NSG diagnostics, and packet capture to monitor connectivity across your Azure IaaS network resources.
-
-+ [Implement intersite connectivity](https://mslabs.cloudguides.com/en-us/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%209). Run a template to create a virtual network infrastructure with several virtual machines. Configure virtual network peerings and test the connections. 
-
 ## Architecture diagram
 
 ![Lab 05 architecture diagram](../media/az104-lab05-architecture.png)
@@ -49,9 +39,9 @@ In this task, you create a core services virtual network with a virtual machine.
 
 1. Search for and select `Virtual Machines`.
 
-1. From the virtual machines page, select **Create** then select **Azure Virtual Machine**.
+1. From the virtual machines page, select **Create** then select **Virtual machine**.
 
-1. On the Basics tab, use the following information to complete the form, and then select **Next: Disks >**. For any setting not specified, leave the default value.
+1. On the Basics tab, use the following information to complete the form, and then select **Next : Disks >**. For any setting not specified, leave the default value.
  
     | Setting | Value | 
     | --- | --- |
@@ -61,7 +51,7 @@ In this task, you create a core services virtual network with a virtual machine.
     | Region | **(US) East US** |
     | Availability options | No infrastructure redundancy required |
     | Security type | **Standard** |
-    | Image | **Windows Server 2019 Datacenter: x64 Gen2** (notice your other choices) |
+    | Image (See all images) | **Windows Server 2019 Datacenter - x64 Gen2** (notice your other choices) |
     | Size | **Standard_DS2_v3** |
     | Username | `localadmin` | 
     | Password | **Provide a complex password** |
@@ -69,22 +59,22 @@ In this task, you create a core services virtual network with a virtual machine.
 
     ![Screenshot of Basic virtual machine creation page. ](../media/az104-lab05-createcorevm.png)
    
-1. On the **Disks** tab take the defaults and then select **Next: Networking >**.
+1. On the **Disks** tab take the defaults and then select **Next : Networking >**.
 
 1. On the **Networking** tab, for Virtual network, select **Create new**.
 
-1. Use the following information to configure the virtual network, and then select **Ok**. If necessary, remove or replace the existing information.
+1. Use the following information to configure the virtual network, and then select **OK**. If necessary, remove or replace the existing information.
 
     | Setting | Value | 
     | --- | --- |
-    | Name | `CoreServicesVNet` (Create new) |
+    | Name | `CoreServicesVnet` (Create or edit) |
     | Address range | `10.0.0.0/16`  |
     | Subnet Name | `Core` | 
     | Subnet address range | `10.0.0.0/24` |
 
-1. Select the **Monitoring** tab. For Boot Diagnostics, select **Disable**.
+1. Select the **Monitoring** tab. For Boot diagnostics, select **Disable**.
 
-1. Select **Review + Create**, and then select **Create**.
+1. Select **Review + create**, and then select **Create**.
 
 1. You do not need to wait for the resources to be created. Continue on to the next task.
 
@@ -96,9 +86,9 @@ In this task, you create a manufacturing services virtual network with a virtual
 
 1. From the Azure portal, search for and navigate to **Virtual Machines**.
 
-1. From the virtual machines page, select **Create** then select **Azure Virtual Machine**.
+1. From the virtual machines page, select **Create** then select **Virtual machine**.
 
-1. On the Basics tab, use the following information to complete the form, and then select **Next: Disks >**. For any setting not specified, leave the default value.
+1. On the Basics tab, use the following information to complete the form, and then select **Next : Disks >**. For any setting not specified, leave the default value.
  
     | Setting | Value | 
     | --- | --- |
@@ -108,28 +98,28 @@ In this task, you create a manufacturing services virtual network with a virtual
     | Region | **(US) East US** |
     | Security type | **Standard** |
     | Availability options | No infrastructure redundancy required |
-    | Image | **Windows Server 2019 Datacenter: x64 Gen2** |
+    | Image (See all images) | **Windows Server 2019 Datacenter - x64 Gen2** |
     | Size | **Standard_DS2_v3** | 
     | Username | `localadmin` | 
     | Password | **Provide a complex password** |
     | Public inbound ports | **None** |
 
-1. On the **Disks** tab take the defaults and then select **Next: Networking >**.
+1. On the **Disks** tab take the defaults and then select **Next : Networking >**.
 
 1. On the Networking tab, for Virtual network, select **Create new**.
 
-1. Use the following information to configure the virtual network, and then select **Ok**.  If necessary, remove or replace the existing address range.
+1. Use the following information to configure the virtual network, and then select **OK**.  If necessary, remove or replace the existing address range.
 
     | Setting | Value | 
     | --- | --- |
-    | Name | `ManufacturingVNet` |
+    | Name | `ManufacturingVnet` |
     | Address range | `172.16.0.0/16`  |
     | Subnet Name | `Manufacturing` |
     | Subnet address range | `172.16.0.0/24` |
 
 1. Select the **Monitoring** tab. For Boot Diagnostics, select **Disable**.
 
-1. Select **Review + Create**, and then select **Create**.
+1. Select **Review + create**, and then select **Create**.
 
 ## Task 3: Use Network Watcher to test the connection between virtual machines 
 
@@ -146,7 +136,7 @@ In this task, you verify that resources in peered virtual networks can communica
     | --- | --- |
     | Source type           | **Virtual machine**   |
     | Virtual machine       | **CoreServicesVM**    | 
-    | Destination type      | **Virtual machine**   |
+    | Destination type      | **Select a virtual machine**   |
     | Virtual machine       | **ManufacturingVM**   | 
     | Preferred IP Version  | **Both**              | 
     | Protocol              | **TCP**               |
@@ -158,7 +148,7 @@ In this task, you verify that resources in peered virtual networks can communica
 
 1. Select **Run diagnostic tests**.
 
-    >**Note**: It may take a couple of minutes for the results to be returned. The screen selections will be greyed out while the results are being collected. Notice the **Connectivity test** shows **UnReachable**. This makes sense because the virtual machines are in different virtual networks. 
+    >**Note**: It may take a couple of minutes for the results to be returned. The screen selections will be greyed out while the results are being collected. Notice the **Connectivity test** shows **Unreachable**. This makes sense because the virtual machines are in different virtual networks. 
 
  
 ## Task 4: Configure virtual network peerings between virtual networks
@@ -169,37 +159,23 @@ In this task, you create a virtual network peering to enable communications betw
 
 1. In CoreServicesVnet, under **Settings**, select **Peerings**.
 
-1. On CoreServicesVnet | Peerings, select **+ Add**.
+1. On CoreServicesVnet, under Peerings, select **+ Add**. If not specified, take the default. 
 
-1. Use the information in the following table to create the peering.
+    | **Parameter**                                    | **Value**                             |
+    | --------------------------------------------- | ------------------------------------- |
+    | Peering link name                             | `ManufacturingVnet-to-CoreServicesVnet` |
+    | Virtual network    | **ManufacturingVnet (az104-rg5)**  |
+    | Allow 'CoreServicesVnet' to access 'ManufacturingVnet'            | selected (default) |
+    | Allow 'CoreServicesVnet' to receive forwarded traffic from 'ManufacturingVnet' | selected |
+    | Peering link name                             | `CoreServicesVnet-to-ManufacturingVnet` |
+    | Allow 'ManufacturingVnet' to access 'CoreServicesVnet'  | selected (default) |
+    | Allow 'ManufacturingVnet' to receive forwarded traffic from 'CoreServicesVnet' | selected  |
 
-| **Parameter**                                    | **Value**                             |
-| --------------------------------------------- | ------------------------------------- |
-| **This virtual network**                                       |                                       |
-| Peering link name                             | `CoreServicesVnet-to-ManufacturingVnet` |
-| Allow CoreServicesVNet to access the peered virtual network            | selected (default)                       |
-| Allow CoreServicesVNet to receive forwarded traffic from the peered virtual network | selected                       |
-| Allow gateway in CoreServicesVNet to forward traffic to the peered virtual network | Not selected (default) |
-| Enable CoreServicesVNet to use the peered virtual networks' remote gateway       | Not selected (default)                        |
-| **Remote virtual network**                                   |                                       |
-| Peering link name                             | `ManufacturingVnet-to-CoreServicesVnet` |
-| Virtual network deployment model              | **Resource manager**                      |
-| I know my resource ID                         | Not selected                          |
-| Subscription                                  | *your subscription*    |
-| Virtual network                               | **ManufacturingVnet**                     |
-| Allow ManufacturingVNet to access CoreServicesVNet  | selected (default)                       |
-| Allow ManufacturingVNet to receive forwarded traffic from CoreServicesVNet | selected                        |
-| Allow gateway in CoreServicesVNet to forward traffic to the peered virtual network | Not selected (default) |
-| Enable ManufacturingVNet to use CoreServicesVNet's remote gateway       | Not selected (default)                        |
+4. Click **Add**.
 
-1. Review your settings and select **Add**.
+5. In CoreServicesVnet, under Peerings, verify that the **CoreServicesVnet-to-ManufacturingVnet** peering is listed. Refresh the page to ensure the **Peering status** is **Connected**.
 
-    ![Screenshot of peering page.](../media/az104-lab05-peering.png)
- 
-1. In CoreServicesVnet | Peerings, verify that the **CoreServicesVnet-to-ManufacturingVnet** peering is listed. Refresh the page to ensure the **Peering status** is **Connected**.
-
-1. Switch to the **ManufacturingVnet** and verify the **ManufacturingVnet-to-CoreServicesVnet** peering is listed. Ensure the **Peering status** is **Connected**. You may need to **Refresh** the page. 
-
+6. Switch to the **ManufacturingVnet** and verify the **ManufacturingVnet-to-CoreServicesVnet** peering is listed. Ensure the **Peering status** is **Connected**. You may need to **Refresh** the page. 
 
 ## Task 5: Use Azure PowerShell to test the connection between virtual machines
 
@@ -224,7 +200,7 @@ In this task, you retest the connection between the virtual machines in differen
     ```Powershell
     Test-NetConnection <CoreServicesVM private IP address> -port 3389
     ```
-1. It may take a couple of minutes for the script to time out. The top of the page shows an informational message *Script execution in progress.*
+1. It may take a couple of minutes for the script to time out. The top of the page shows an informational message *Script execution in progress...*
 
    
 1. The test connection should succeed because peering has been configured. Your computer name and remote address in this graphic may be different. 
@@ -233,19 +209,21 @@ In this task, you retest the connection between the virtual machines in differen
 
 ## Task 6: Create a custom route 
 
-In this task, you want to control network traffic between the perimeter subnet and the internal core services subnet. A virtual network appliance will be installed in the core services subnet and all traffic should be routed there. 
+In this task, you want to control network traffic between the perimeter subnet and the internal core services subnet. A virtual network appliance will be installed in the perimeter subnet and all traffic should be routed there. 
 
 1. Search for select the `CoreServicesVnet`.
 
-1. Select **Subnets** and then **+ Create**. Be sure to **Save** your changes. 
+1. Select **Subnets** and then **+ Subnet**. Be sure to select **Add** to save your changes. 
 
     | Setting | Value | 
     | --- | --- |
     | Name | `perimeter` |
-    | Subnet address range | `10.0.1.0/24`  |
+    | Starting address | `10.0.1.0/24`  |
 
    
-1. In the Azure portal, search for and select `Route tables`, and then select **Create**. 
+1. In the Azure portal, search for and select `Route tables`, select **+ Create**.
+
+1. Enter the following details, select **Review + create**, and then select **Create**. 
 
     | Setting | Value | 
     | --- | --- |
@@ -255,9 +233,11 @@ In this task, you want to control network traffic between the perimeter subnet a
     | Name | `rt-CoreServices` |
     | Propagate gateway routes | **No** |
 
-1. After the route table deploys, select **Go to resource**.
+1. After the route table deploys, Search for and select the **Route Tables**.
+   
+1. Select the resource (not the checkbox) **rt-CoreServices**
 
-1. Select **Routes** and then **+ Add**. Create a route from the future NVA to the CoreServices virtual network. 
+1. Expand **Settings** then select **Routes** and then **+ Add**. Create a route from a future Network Virtual Appliance (NVA) to the CoreServices virtual network. 
 
     | Setting | Value | 
     | --- | --- |
@@ -267,13 +247,13 @@ In this task, you want to control network traffic between the perimeter subnet a
     | Next hop type | **Virtual appliance** (notice your other choices) |
     | Next hop address | `10.0.1.7` (future NVA) |
 
-1. Select **+ Add** when the route is completed. The last thing to do is associate the route with the subnet.
+1. Select **Add**. The last thing to do is associate the route with the subnet.
 
-1. Select **Subnets** and then **Associate**. Complete the configuration.
+1. Select **Subnets** and then **+ Associate**. Complete the configuration.
 
     | Setting | Value | 
     | --- | --- |
-    | Virtual network | **CoreServicesVnet** |
+    | Virtual network | **CoreServicesVnet (az104-rg5)** |
     | Subnet | **Core** |    
 
 >**Note**: You have created a user defined route to direct traffic from the DMZ to the new NVA.  
@@ -286,6 +266,18 @@ If you are working with **your own subscription** take a minute to delete the la
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
 + Using the CLI, `az group delete --name resourceGroupName`.
 
+## Extend your learning with Copilot
+Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.
+
++ How can I use Azure PowerShell or Azure CLI commands to add a virtual network peering between vnet1 and vnet2?
++ Create a table highlighting various Azure and 3rd party monitoring tools supported on Azure. Highlight when to use each tool. 
++ When would I create a custom network route in Azure?
+
+## Learn more with self-paced training
+
++ [Distribute your services across Azure virtual networks and integrate them by using virtual network peering](https://learn.microsoft.com/en-us/training/modules/integrate-vnets-with-vnet-peering/). Use virtual network peering to enable communication across virtual networks in a way that's secure and minimally complex.
++ [Manage and control traffic flow in your Azure deployment with routes](https://learn.microsoft.com/training/modules/control-network-traffic-flow-with-routes/). Learn how to control Azure virtual network traffic by implementing custom routes.
+
 
 ## Key takeaways
 
@@ -297,8 +289,3 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + The traffic between virtual machines in peered virtual networks uses the Microsoft backbone infrastructure.
 + System defined routes are automatically created for each subnet in a virtual network. User-defined routes override or add to the default system routes. 
 + Azure Network Watcher provides a suite of tools to monitor, diagnose, and view metrics and logs for Azure IaaS resources.
-
-## Learn more with self-paced training
-
-+ [Distribute your services across Azure virtual networks and integrate them by using virtual network peering](https://learn.microsoft.com/en-us/training/modules/integrate-vnets-with-vnet-peering/). Use virtual network peering to enable communication across virtual networks in a way that's secure and minimally complex.
-+ [Manage and control traffic flow in your Azure deployment with routes](https://learn.microsoft.com/training/modules/control-network-traffic-flow-with-routes/). Learn how to control Azure virtual network traffic by implementing custom routes.

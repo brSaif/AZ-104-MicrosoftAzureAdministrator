@@ -26,16 +26,6 @@ Your organization's cloud footprint has grown considerably in the last year. Dur
 
 - use resource locks to protect configured resources
 
-## Interactive lab simulations
-
-There are several interactive lab simulations that you might find useful for this topic. The simulation lets you to click through a similar scenario at your own pace. There are differences between the interactive simulation and this lab, but many of the core concepts are the same. An Azure subscription is not required. 
-
-+ [Manage resource locks](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%2015). Add a resource lock and test to confirm.
-  
-+ [Create an Azure policy](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%2017). Create an Azure policy that restricts the location resources can be located. Create a new resource and ensure the policy is enforced. 
-
-+ [Manage governance via Azure policy](https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%203). Create and assign tags via the Azure portal. Create an Azure policy that requires tagging. Remediate non-compliant resources.
-
 ## Architecture diagram
 
 ![Diagram of the task architecture.](../media/az104-lab02b-architecture.png)
@@ -49,7 +39,7 @@ There are several interactive lab simulations that you might find useful for thi
 
 ## Task 1: Assign tags via the Azure portal
 
-In this task, you will create and assign a tag to an Azure resource group via the Azure portal. Tags are a critical component of a governance strategy as outlined by the Microsoft Well-Architected Framework and Cloud Adoption Framework. Tags can allow you to quickly identify resource owners, sunset dates, group contacts, and other name/value pairs that your organization  deems important. For this task, you assign a tag identifying the resource role ('Infra' for 'Infrastructure').
+In this task, you will create and assign a tag to an Azure resource group via the Azure portal. Tags are a critical component of a governance strategy as outlined by the Microsoft Well-Architected Framework and Cloud Adoption Framework. Tags can allow you to quickly identify resource owners, sunset dates, group contacts, and other name/value pairs that your organization  deems important. For this task, you assign a tag identifying the resource Cost Center. 
 
 1. Sign in to the **Azure portal** - `https://portal.azure.com`.
       
@@ -65,12 +55,12 @@ In this task, you will create and assign a tag to an Azure resource group via th
 
     >**Note:** For each lab in this course you will create a new resource group. This lets you quickly locate and manage your lab resources. 
 
-1. Select **Next: Tags** and create a new tag.
+1. Select **Next** and move to the **Tags** tab. Provide information for a new tag.
 
     | Setting | Value |
     | --- | --- |
-    | Name | `Cost Center` |
-    | Value | `000` |
+    | Name | Cost Center |
+    | Value | 000 |
 
 1. Select **Review + Create**, and then select **Create**.
 
@@ -84,9 +74,9 @@ In this task, you will assign the built-in *Require a tag and its value on resou
 
     ![Screenshot of the policy definition.](../media/az104-lab02b-policytags.png)
 
-1. Click the entry representing the **Require a tag and its value on resources** built-in policy. Take a minute to review the definition. 
+1. Search for the `Require a tag and its value on resources` built-in policy. Select the policy and take a minute to review the definition. 
 
-1. On the **Require a tag and its value on resources** built-in policy definition blade, click **Assign**.
+1. Select **Assign policy**.
 
 1. Specify the **Scope** by clicking the ellipsis button and selecting the following values. Click **Select** when you are done. 
 
@@ -101,13 +91,13 @@ In this task, you will assign the built-in *Require a tag and its value on resou
 
     | Setting | Value |
     | --- | --- |
-    | Assignment name | `Require Cost Center tag with Default value`|
-    | Description | `Require Cost Center tag with default value for all resources in the resource group`|
+    | Assignment name | `Require Cost Center tag and its value on resources` |
+    | Description | `Require Cost Center tag and its value on all resources in the resource group`|
     | Policy enforcement | Enabled |
 
     >**Note**: The **Assignment name** is automatically populated with the policy name you selected, but you can change it. The **Description** is optional. Notice you can disable the policy at any time. 
 
-1. Click **Next** twice and set **Parameters** to the following values:
+1. Click **Next** and set **Parameters** to the following values:
 
     | Setting | Value |
     | --- | --- |
@@ -122,7 +112,7 @@ In this task, you will assign the built-in *Require a tag and its value on resou
     
     >**Note**: It might take between 5 and 10 minutes for the policy to take effect.
 
-1. In the portal, search for and select `Storage Account`, and select **+ Create**. 
+1. In the portal, search for and select `Storage Accounts`, and select **+ Create**. 
 
 1. On the **Basics** tab of the **Create storage account** blade, complete the configuration.
 
@@ -137,7 +127,7 @@ In this task, you will assign the built-in *Require a tag and its value on resou
 
     ![Screenshot of the disallowed policy error.](../media/az104-lab02b-policyerror.png) 
 
->**Note**: By clicking the **Raw Error** tab, you can find more details about the error, including the name of the role definition **Require Cost Center tag with Default value**. The deployment failed because the storage account you attempted to create did not have a tag named **Cost Center** with its value set to **Default**.
+>**Note**: By clicking the **Raw Error** tab, you can find more details about the error, including the name of the role definition **Require a tag and its value on resources**. The deployment failed because the storage account you attempted to create did not have a tag named **Cost Center** with its value set to **Default**.
 
 ## Task 3: Apply tagging via an Azure policy
 
@@ -147,7 +137,7 @@ In this task, we will use the new policy definition to remediate any non-complia
 
 1. In the **Authoring** section, click **Assignments**. 
 
-1. In the list of assignments, click the ellipsis icon in the row representing the **Require Cost Center tag with Default value** policy assignment and use the **Delete assignment** menu item to delete the assignment.
+1. In the list of assignments, click the ellipsis icon in the row representing the **Require a tag and its value on resources** policy assignment and use the **Delete assignment** menu item to delete the assignment.
 
 1. Click **Assign policy** and specify the **Scope** by clicking the ellipsis button and selecting the following values:
 
@@ -166,7 +156,7 @@ In this task, we will use the new policy definition to remediate any non-complia
     | Description | `Inherit the Cost Center tag and its value 000 from the resource group if missing` |
     | Policy enforcement | Enabled |
 
-1. Click **Next** twice and set **Parameters** to the following values:
+1. Click **Next** and set **Parameters** to the following values:
 
     | Setting | Value |
     | --- | --- |
@@ -189,7 +179,7 @@ In this task, we will use the new policy definition to remediate any non-complia
     
     >**Note**: It might take between 5 and 10 minutes for the policy to take effect.
 
-1. Search for and select `Storage Account`, and click **+ Create**. 
+1. Search for and select `Storage Account` and click **+ Create**. 
 
 1. On the **Basics** tab of the **Create storage account** blade, verify that you are using the Resource Group that the Policy was applied to and specify the following settings (leave others with their defaults) and click **Review**:
 
@@ -230,6 +220,8 @@ In this task, you configure and test a resource lock. Locks prevent either delet
 
     ![Screenshot of the failure to delete message.](../media/az104-lab02b-failuretodelete.png) 
 
+    >**Note:** You will need to remove the lock if you intend to delete the resource group. 
+    
 ## Cleanup your resources
 
 If you are working with **your own subscription** take a minute to delete the lab resources. This will ensure resources are freed up and cost is minimized. The easiest way to delete the lab resources is to delete the lab resource group. 
@@ -238,18 +230,20 @@ If you are working with **your own subscription** take a minute to delete the la
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
 + Using the CLI, `az group delete --name resourceGroupName`.
 
+## Extend your learning with Copilot
+Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.
++ What are the Azure PowerShell and CLI commands for adding and deleting resource locks on a resource group?
++ Tabulate the differences between Azure policy and Azure RBAC, include examples.
++ What are the steps to enforce Azure policy and remediate resources which are not compliant?
++ How can I get a report of Azure resources with specific tags?
+
 ## Key takeaways
 
 Congratulations on completing the lab. Here are the main takeaways for this lab. 
 
-+ Azure tags are metadata that consists of a key-value pair. Tags describe a particular resource in your environment. In particular, tagging in Azure enables you to label your resources in a logical manne.
++ Azure tags are metadata that consists of a key-value pair. Tags describe a particular resource in your environment. In particular, tagging in Azure enables you to label your resources in a logical manner.
 + Azure Policy establishes conventions for resources. Policy definitions describe resource compliance conditions and the effect to take if a condition is met. A condition compares a resource property field or a value to a required value. There are many built-in policy definitions and you can customize the policies. 
 + The Azure Policy remediation task feature is used to bring resources into compliance based on a definition and assignment. Resources that are non-compliant to a modify or deployIfNotExist definition assignment, can be brought into compliance using a remediation task.
 + You can configure a resource lock on a subscription, resource group, or resource. The lock can protect a resource from accidental user deletions and modifications. The lock overrides any user permissions.
-+ Azure Policy is pre-deployment security practice. RBAC and resource locks are post-deployment security practice. 
-
-## Learn more with self-paced training
-
-+ [Design an enterprise governance strategy](https://learn.microsoft.com/training/modules/enterprise-governance/). Use RBAC and Azure Policy to limit access to your Azure solutions, and determine which method is right for your security goals.
-  
++ Azure Policy is pre-deployment security practice. RBAC and resource locks are post-deployment security practice.
 

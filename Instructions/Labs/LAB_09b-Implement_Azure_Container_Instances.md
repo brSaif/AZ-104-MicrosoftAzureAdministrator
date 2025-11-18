@@ -17,13 +17,6 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 ## Lab scenario
 
 Your organization has a web application that runs on a virtual machine in your on-premises data center. The organization wants to move all applications to the cloud but doesn't want to have a large number of servers to manage. You decide to evaluate Azure Container Instances and Docker. 
-## Interactive lab simulations
-
-There are interactive lab simulations that you might find useful for this topic. The simulation lets you to click through a similar scenario at your own pace. There are differences between the interactive simulation and this lab, but many of the core concepts are the same. An Azure subscription is not required.
-
-+ [Deploy Azure Container Instances](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%203). Create, configure, and deploy a Docker container with Azure Container Instances.
-  
-+ [Implement Azure Container Instances](https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%2014).  Deploy a Docker image using Azure Container Instances. 
 
 ## Architecture diagram
 
@@ -61,9 +54,11 @@ In this task, you will create a simple web application using a Docker image. Doc
 
     >**Note**: Your container will be publicly reachable at dns-name-label.region.azurecontainer.io. If you receive a **DNS name label not available** error message, specify a different value.
 
+1. Click **Next: Monitoring >** and uncheck **Enable container instance logs**. 
+
 1. Click **Next: Advanced >**, review the settings without making any changes.
 
- 1. Click **Review + Create**, ensure that the validation passed and then select **Create**.
+1. Click **Review + Create**, ensure that the validation passed and then select **Create**.
 
     >**Note**: Wait for the deployment to complete. This should take 2-3 minutes.
 
@@ -73,7 +68,7 @@ In this task, you will create a simple web application using a Docker image. Doc
 
 In this task, you review the deployment of the container instance. By default, the Azure Container Instance is accessible over port 80. After the instance has been deployed, you can navigate to the container using the DNS name that you provided in the previous task.
 
-1. On the deployment blade, click the **Go to resource** link.
+1. When the deployment completes, select **Go to resource** link.
 
 1. On the **Overview** blade of the container instance, verify that **Status** is reported as **Running**.
 
@@ -95,6 +90,15 @@ If you are working with **your own subscription** take a minute to delete the la
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
 + Using the CLI, `az group delete --name resourceGroupName`.
 
+## Extend your learning with Copilot
+Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.
+
++ Summarize the steps to create and configure an Azure Container Instance.
++ What are the ways I can run a serverless container on Azure?
+
+## Learn more with self-paced training
+
++ [Run container images in Azure Container Instances](https://learn.microsoft.com/training/modules/create-run-container-images-azure-container-instances/). Learn how Azure Container Instances can help you quickly deploy containers, how to set environment variables, and specify container restart policies.
 
 ## Key takeaways
 
@@ -104,9 +108,5 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + ACI doesn't require you to provision or manage any underlying infrastructure.
 + ACI supports both Linux containers and Windows containers.
 + Workloads on ACI are usually started and stopped by some kind of process or trigger and are usually short-lived. 
-
-## Learn more with self-paced training
-
-+ [Run container images in Azure Container Instances](https://learn.microsoft.com/training/modules/create-run-container-images-azure-container-instances/). Learn how Azure Container Instances can help you quickly deploy containers, how to set environment variables, and specify container restart policies.
 
     

@@ -18,14 +18,6 @@ This lab requires an Azure subscription. Your subscription type may affect the a
 
 Your organization is currently storing data in on-premises data stores. Most of these files are not accessed frequently. You would like to minimize the cost of storage by placing infrequently accessed files in lower-priced storage tiers. You also plan to explore different protection mechanisms that Azure Storage offers, including network access, authentication, authorization, and replication. Finally, you want to determine to what extent Azure Files is suitable for hosting your on-premises file shares.
 
-## Interactive lab simulations
-
-There are interactive lab simulations that you might find useful for this topic. The simulation lets you to click through a similar scenario at your own pace. There are differences between the interactive simulation and this lab, but many of the core concepts are the same. An Azure subscription is not required. 
-
-+ [Create blob storage](https://mslearn.cloudguides.com/en-us/guides/AZ-900%20Exam%20Guide%20-%20Azure%20Fundamentals%20Exercise%205). Create a storage account, manage blob storage, and monitor storage activities. 
-  
-+ [Manage Azure storage](https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%2011). Create a storage account and review the configuration. Manage blob storage containers. Configure storage networking. 
-
 ## Architecture diagram
 
 ![Diagram of the tasks.](../media/az104-lab07-architecture.png)
@@ -54,37 +46,38 @@ In this task, you will create and configure a storage account. The storage accou
     | Region                | **(US) East US**  |
     | Performance           | **Standard** (notice the Premium option) |
     | Redundancy            | **Geo-redundant storage** (notice the other options)|
-    | Make read access to data in the event of regional availability | Check the box |
+    | Make read access to data available in the event of regional unavailability. | Check the box |
 
->**Did you know?** You should use the Standard performance tier for most applications. Use the Premium performance tier for enterprise or high-performance applications. 
+    >**Did you know?** You should use the Standard performance tier for most applications. Use the Premium performance tier for enterprise or high-performance applications. 
 
 1. On the **Advanced** tab, use the informational icons to learn more about the choices. Take the defaults. 
 
-1. On the **Networking** tab, review the available options, select **Disable public access and use private access.**.
+1. On the **Networking** tab, in the **Public network access** section, select **Disable**. This will restrict inbound access while allowing outbound access. 
 
-1. Review the **Data protection** tab. Notice 7 days is the default soft delete retention policy. Note you can enable blob versioning. Accept the defaults.
+1. Review the **Data protection** tab. Notice 7 days is the default soft delete retention policy. Note you can enable versioning for blobs. Accept the defaults.
 
 1. Review the **Encryption** tab. Notice the additional security options. Accept the defaults.
 
-1. Select **Review**, wait for the validation process to complete, and then click **Create**.
+1. Select **Review + create**, wait for the validation process to complete, and then click **Create**.
 
 1. Once the storage account is deployed, select **Go to resource**.
 
 1. Review the **Overview** blade and the additional configurations that can be changed. These are global settings for the storage account. Notice the storage account can be used for Blob containers, File shares, Queues, and Tables.
 
-1. In the **Security + Networking** section, select **Networking**. Notice public network access is disabled.
+1. In the **Security + networking** blade, select **Networking**. Notice **Public network access** is disabled.
 
-    + Change the **public access level** to **Enabled from selected virtual networks and IP addresses**.
-    + In the **Firewall** section, check the box for **Add your client IP address.**
-    + Be sure to **Save** your changes. 
+    + Select **Manage** and change the **Public network access** setting to **Enabled**. 
+    + Change the **Public network access scope** to **Enable from selected networks**.
+    + In the **IPv4 Addresses** section, select **Add your client IPv4 address**.
+    + Save your changes.
   
-1. In the **Data management** section, view the **Redundancy** blade. Notice the information about your primary and secondary data center locations.
+1. In the **Data management** blade, select **Redundancy**. Notice the information about your primary and secondary data center locations.
 
-1. In the **Data management** section, select **Lifecycle management**, and then select **Add a rule**.
+1. In the **Data management** blade, select **Lifecycle management**, and then select **Add a rule**.
 
-    + **Name** the rule `Movetocool`. Notice your options for limiting the scope of the rule.
+    + **Name** the rule `Movetocool`. Notice your options for limiting the scope of the rule. Click **Next**. 
     
-    + On the **Base blobs** tab, *if* based blobs were last modified more than `30 days` ago *then* **move to cool storage**. Notice your other choices. 
+    + On the **Add rule** page, *if* base blobs were last modified more than `30` days ago *then* **Move to cool storage**. Notice your other choices. 
     
     + Notice you can configure other conditions. Select **Add** when you are done exploring.
 
@@ -98,9 +91,9 @@ In this task, you will create a blob container and upload an image. Blob contain
 
 1. Continue in the Azure portal, working with your storage account.
 
-1. In the **Data storage** section, click **Containers**. 
+1. In the **Data storage** blade, select **Containers**. 
 
-1. Click **+ Container** and **Create** a container with the following settings:
+1. Click **+ Add container** and **Create** a container with the following settings:
 
     | Setting | Value |
     | --- | --- |
@@ -109,7 +102,7 @@ In this task, you will create a blob container and upload an image. Blob contain
 
     ![Screenshot of create a container.](../media/az104-lab07-create-container.png)
 
-1. On your container, scroll to the ellipsis (...) on the far right, select **Access Policy**.
+1. On your container, scroll to the ellipsis (...) on the far right, select **Access policy**.
 
 1. In the **Immutable blob storage** area, select **Add policy**.
 
@@ -142,9 +135,9 @@ In this task, you will create a blob container and upload an image. Blob contain
 
 1. Confirm you have a new folder, and your file was uploaded. 
 
-1. Select your upload file and review the options including **Download**, **Delete**, **Change tier**, and **Acquire lease**.
+1. Select your upload file and review the ellipsis (...) options including **Download**, **Delete**, **Change tier**, and **Acquire lease**.
 
-1. Copy the file **URL** and paste into a new **Inprivate** browsing window.
+1. Copy the file **URL** (Settings --> Properties blade) and paste into a new **InPrivate** browsing window.
 
 1. You should be presented with an XML-formatted message stating **ResourceNotFound** or **PublicAccessNotPermitted**.
 
@@ -152,7 +145,7 @@ In this task, you will create a blob container and upload an image. Blob contain
 
 ### Configure limited access to the blob storage
 
-1. Select your uploaded file and then on the **Generate SAS** tab. You can also use the ellipsis (...) to the far right. Specify the following settings (leave others with their default values):
+1. Browse back to the file that you uploaded and select the ellipsis (…) to the far right, then select **Generate SAS** and specify the following settings (leave others with their default values):
 
     | Setting | Value |
     | --- | --- |
@@ -178,13 +171,13 @@ In this task, you will create and configure Azure File shares. You will use Stor
 
 ### Create the file share and upload a file
 
-1. In the Azure portal, navigate back to your storage account, in the **Data storage** section, click **File shares**.
+1. In the Azure portal, navigate back to your storage account, in the **Data storage** blade, click **File shares**.
 
 1. Click **+ File share** and on the **Basics** tab give the file share a name, `share1`. 
 
-1. Notice the **Tier** options. Keep the default **Transaction optimized**.
+1. Notice the **Access tier** options. Keep the default **Transaction optimized**.
    
-1. Move to the **Backup** tab and ensure **Enable Backup** is **not** checked. We are disabling backup to simplify the lab configuration.
+1. Move to the **Backup** tab and ensure **Enable backup** is **not** checked. We are disabling backup to simplify the lab configuration.
 
 1. Click **Review + create**, and then **Create**. Wait for the file share to deploy.
 
@@ -192,7 +185,7 @@ In this task, you will create and configure Azure File shares. You will use Stor
 
 ### Explore Storage Browser and upload a file
 
-1. Return to your storage account and select **Storage Browser**. The Azure Storage Browser is a portal tool that lets you quickly view all the storage services under your account.
+1. Return to your storage account and select **Storage browser**. The Azure Storage Browser is a portal tool that lets you quickly view all the storage services under your account.
 
 1. Select **File shares** and verify your **share1** directory is present.
 
@@ -204,7 +197,7 @@ In this task, you will create and configure Azure File shares. You will use Stor
 
 ### Restrict network access to the storage account
 
-1. In the portal, search for and select **Virtual networks**.
+1. In the portal, search for and select `Virtual networks`.
 
 1. Select **+ Create**. Select your resource group. and give the virtual network a **name**, `vnet1`.
 
@@ -212,19 +205,23 @@ In this task, you will create and configure Azure File shares. You will use Stor
 
 1. Wait for the virtual network to deploy, and then select **Go to resource**.
 
-1. In the **Settings** section, select the **Subnets** blade.
-    + Select the **default** subnet.
-    + In the **Service endpoints** section choose **Microsoft.Storage** in the **Services** drop-down.
-    + Do not make any other changes.    
-    + Be sure to **Save** your changes. 
+1. In the **Settings** section, select the **Service endpoints** blade.
+    + Select **Add**. 
+    + In the **Service** drop-down select **Microsoft.Storage**.
+    + In the **Subnets** drop-down check the **Default** subnet.
+    + Click **Add** to save your changes.  
 
 1. Return to your storage account.
 
-1. In the **Security + networking** section, select the **Networking** blade.
+1. In the **Security + networking** blade, select **Networking**.
 
-1. Select **add existing virtual network** and select **vnet1** and **default** subnet, select **Add**.
+1. Under **Public network access** select **Manage**. 
 
-1. In the **Firewall** section, **Delete** your machine IP address. Allowed traffic should only come from the virtual network. 
+1. Select **Add a virtual network** and then **Add existing network**.
+
+1. Select **vnet1** and **default** subnet, select **Add**.
+
+1. In the **IPv4 Addresses** section, **Delete** your machine IP address. Allowed traffic should only come from the virtual network. 
 
 1. Be sure to **Save** your changes.
 
@@ -232,7 +229,7 @@ In this task, you will create and configure Azure File shares. You will use Stor
 
 1. Select the **Storage browser** and **Refresh** the page. Navigate to your file share or blob content.  
 
-    >**Note:** You should receive a message *not authorized to perform this operation*. You are not connecting from the virtual network. It may take a couple of minutes for this to take effect.
+    >**Note:** You should receive a message *not authorized to perform this operation*. You are not connecting from the virtual network. It may take a couple of minutes for this to take effect. You may still be able to view the file share, but not the files or blobs in the storage account. 
 
 
 ![Screenshot unauthorized access.](../media/az104-lab07-notauthorized.png)
@@ -245,6 +242,18 @@ If you are working with **your own subscription** take a minute to delete the la
 + Using Azure PowerShell, `Remove-AzResourceGroup -Name resourceGroupName`.
 + Using the CLI, `az group delete --name resourceGroupName`.
 
+## Extend your learning with Copilot
+Copilot can assist you in learning how to use the Azure scripting tools. Copilot can also assist in areas not covered in the lab or where you need more information. Open an Edge browser and choose Copilot (top right) or navigate to *copilot.microsoft.com*. Take a few minutes to try these prompts.
+
++ Provide an Azure PowerShell script to create a storage account with a blob container. 
++ Provide a checklist I can use to ensure my Azure storage account is secure.
++ Create a table to compare Azure storage redundancy models.
+
+## Learn more with self-paced training
+
++ [Create an Azure Storage account](https://learn.microsoft.com/training/modules/create-azure-storage-account/). Create an Azure Storage account with the correct options for your business needs.
++ [Manage the Azure Blob storage lifecycle](https://learn.microsoft.com/training/modules/manage-azure-blob-storage-lifecycle). Learn how to manage data availability throughout the Azure Blob storage lifecycle.
+
 ## Key takeaways
 
 Congratulations on completing the lab. Here are the main takeaways for this lab. 
@@ -254,8 +263,3 @@ Congratulations on completing the lab. Here are the main takeaways for this lab.
 + Azure blob storage allows you to store large amounts of unstructured data on Microsoft's data storage platform. Blob stands for Binary Large Object, which includes objects such as images and multimedia files.
 + Azure file Storage provides shared storage for structured data. The data can be organized in folders.
 + Immutable storage provides the capability to store data in a write once, read many (WORM) state. Immutable storage policies can be time-based or legal-hold.
-
-## Learn more with self-paced training
-
-+ [Optimize your cost with Azure Blob Storage](https://learn.microsoft.com/training/modules/optimize-your-cost-azure-blob-storage/). Learn how to optimize your cost with Azure Blob Storage.
-+ [Control access to Azure Storage with shared access signatures](https://learn.microsoft.com/training/modules/control-access-to-azure-storage-with-sas/). Grant access to data stored in your Azure Storage accounts securely by using shared access signatures.
